@@ -6,7 +6,7 @@
 /*   By: bguyot <bguyot@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 15:20:57 by bguyot            #+#    #+#             */
-/*   Updated: 2022/05/27 16:47:08 by bguyot           ###   ########.fr       */
+/*   Updated: 2022/05/30 07:43:28 by bguyot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,18 @@ Span	&Span::operator=(const Span &src)
 
 void	Span::addNumber(int n)
 {
+	std::list<int>::iterator elem;
+
 	if (this->nb_elem >= this->N)
 		throw std::exception();
-	this->stock.insert(upper_bound(this->stock.begin(), this->stock.end(), n), n);
+	elem = this->stock.begin();
+	for (unsigned int i = 0; i < this->nb_elem; i++)
+	{
+		if (*elem >= n)
+			break;
+		elem++;
+	}
+	this->stock.insert(elem, n);
 	this->nb_elem++;
 }
 
@@ -89,10 +98,12 @@ unsigned int	Span::shortestSpan(void)
 
 	if (this->nb_elem <= 1)
 		throw std::exception();
-	for (size_t i = 0; i < this->stock.size() - 1; i++)
+	for (size_t i = 0; i < this->nb_elem; i++)
 	{
 		std::list<int>::iterator old = first++;
-		std::cout << *old << std::endl;
+		// std::cout << *old << std::endl;
+		if ((unsigned) *first - *old <= res)
+			res = abs(*first - *old);
 	}
 	return (res);
 }
@@ -101,5 +112,7 @@ unsigned int	Span::longestSpan(void)
 {
 	if (this->nb_elem <= 1)
 		throw std::exception();
-	return (*this->stock.end() - *this->stock.begin());
+	std::list<int>::iterator end = this->stock.begin();
+	std::advance(end, this->nb_elem - 1);
+	return (*end - *this->stock.begin());
 }
