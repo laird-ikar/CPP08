@@ -6,7 +6,7 @@
 /*   By: bguyot <bguyot@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 07:57:36 by bguyot            #+#    #+#             */
-/*   Updated: 2022/05/30 08:29:02 by bguyot           ###   ########.fr       */
+/*   Updated: 2022/05/30 08:52:38 by bguyot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 int main(void)
 {
 	{
+		std::cout << "=========================\nBegin MutantStack tests\n=========================" << std::endl;
 		MutantStack<int> mstack;
 
 		mstack.push(5);
@@ -40,6 +41,7 @@ int main(void)
 		std::stack<int> s(mstack);
 	}
 	{
+		std::cout << "\n\n=========================\nBegin list tests\n=========================" << std::endl;
 		std::list<int> mstack;
 
 		mstack.push_back(5);
