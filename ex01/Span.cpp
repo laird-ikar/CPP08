@@ -6,7 +6,7 @@
 /*   By: bguyot <bguyot@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 15:20:57 by bguyot            #+#    #+#             */
-/*   Updated: 2022/05/30 07:43:28 by bguyot           ###   ########.fr       */
+/*   Updated: 2022/06/16 07:58:29 by bguyot           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	Span::addNumber(int n)
 	std::list<int>::iterator elem;
 
 	if (this->nb_elem >= this->N)
-		throw std::exception();
+		throw alreadyFull();
 	elem = this->stock.begin();
 	for (unsigned int i = 0; i < this->nb_elem; i++)
 	{
@@ -97,7 +97,7 @@ unsigned int	Span::shortestSpan(void)
 	std::list<int>::iterator first = this->stock.begin();
 
 	if (this->nb_elem <= 1)
-		throw std::exception();
+		throw setTooSmall();
 	for (size_t i = 0; i < this->nb_elem; i++)
 	{
 		std::list<int>::iterator old = first++;
@@ -111,8 +111,27 @@ unsigned int	Span::shortestSpan(void)
 unsigned int	Span::longestSpan(void)
 {
 	if (this->nb_elem <= 1)
-		throw std::exception();
+		throw setTooSmall();
 	std::list<int>::iterator end = this->stock.begin();
 	std::advance(end, this->nb_elem - 1);
 	return (*end - *this->stock.begin());
+}
+
+/***********************
+*	Exceptions
+***********************/
+
+const char* Span::rangeTooBig::what() const throw()
+{
+	return "Span::rangeTooBig";
+}
+
+const char* Span::alreadyFull::what() const throw()
+{
+	return "Span::alreadyFull";
+}
+
+const char* Span::setTooSmall::what() const throw()
+{
+	return "Span::setTooSmall";
 }
